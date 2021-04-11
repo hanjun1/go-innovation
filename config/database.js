@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { Sequelize, DataTypes } = require('sequelize');
+const dbExport = {};
 const db = {
     name: process.env.DB_NAME,
     user: process.env.DB_USER,
@@ -15,6 +16,8 @@ const db = {
       cert: fs.readFileSync('config/pem/client-cert.pem').toString(),
     },
   }
+
+
 const sequelize = new Sequelize(db.name, db.user, db.pass, 
     {
         host: db.host,
@@ -28,6 +31,7 @@ const sequelize = new Sequelize(db.name, db.user, db.pass,
         // Model attributes are defined here
         firstName: {type: DataTypes.STRING},
         lastName: {type: DataTypes.STRING},
+        displayName: {type: DataTypes.STRING},
         avatar: {type: DataTypes.STRING},
         email: {type: DataTypes.STRING,
             allowNull: false},
@@ -39,3 +43,8 @@ const sequelize = new Sequelize(db.name, db.user, db.pass,
 (async ()=>{
     User.sync({force: true});
 })()
+
+dbExport.sequelize = sequelize;
+dbExport.Sequelize = Sequelize;
+
+module.exports = dbExport;
