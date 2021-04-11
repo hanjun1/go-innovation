@@ -36,8 +36,8 @@ const User = sequelize.define(
 
 /*  (async ()=>{
     User.sync({force: true});
-})() 
- */
+})()  */
+
 dbExport.sequelize = sequelize;
 dbExport.Sequelize = Sequelize;
 
