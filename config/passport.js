@@ -8,24 +8,25 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK
   },
-  function(accessToken, refreshToken, profile, cb) {
-    Users.findOne({ where: {'googleId': profile.id} }, function(err, user) {
-      console.log(profile)
-      if (err) return cb(err);
-      if (user) {
-        return cb(null, user);
-      } else {
-        var newStudent = new Users({
+  async function(accessToken, refreshToken, profile, cb) {
+    try{
+      let thisUser = await Users.findOne({ where: {'googleId': profile.id} });
+      console.log(thisUser, profile);
+      if (thisUser){
+        return cb(null, thisUser);
+      }else{
+        Users.create({
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
           displayName: profile.displayName,
+          avatar: profile.photos[0].value,
           email: profile.emails[0].value,
           googleId: profile.id
-        });
-        newStudent.save(function(err) {
-          if (err) return cb(err);
-          return cb(null, newStudent);
-        });
+        })
       }
-    });
+    }catch(err){
+      return cb(err);
+    }
   }
 ));
 
@@ -33,8 +34,11 @@ passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-    Users.findById(id, function(err, user) {
-      done(err, user);
-    });
+passport.deserializeUser(async function(id, done) {
+  try{
+    let thisUser = await Users.findByPk(id)
+    done(null, thisUser)
+  }catch(err){
+    done(err)
+  }
   });

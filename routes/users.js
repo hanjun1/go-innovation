@@ -2,16 +2,14 @@ var express = require('express');
 var router = express.Router();
 let passport = require('passport');
 
-router.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+router.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 router.get('/oauth2callback', passport.authenticate(
   'google',
   {
-    successRedirect: '/',
-    failureRecirect: '/',
+    successRedirect: '/success',
+    failureRecirect: '/failure',
   }
 ))
 

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var passport = require('passport');
 var logger = require('morgan');
 
 require('dotenv').config()
@@ -29,6 +30,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }))
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
