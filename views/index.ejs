@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html>
+<%- include('partials/head_default') %> 
+<nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="#">Login</a></li>
+    <li><a href="#">Logout</a></li>
+    <li><a href="#">Profile</a></li>
+    <li><a href="#">Settings</a></li>
+    <li><a href="https://tinyurl.com/d7fv66j2">TOP SECRET</a></li>
 
-<head>
-  <title>
-    <%= title %>
-  </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-
+  </ul>
+</nav>
 <body>
   <h1>
     <%= title %>
   </h1>
-  <p>Welcome to <%= title %>
+  <p>Splash page for <%= title %>
   </p>
-</body>
-
-</html>
+  
+<%- include('partials/foot_default') %> 
