@@ -12,6 +12,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+require('./config/database');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -26,7 +28,7 @@ app.use(session({
   saveUninitialized: true,
 }))
 
-require('./config/database');
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 

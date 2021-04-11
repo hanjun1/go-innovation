@@ -1,8 +1,5 @@
 const fs = require('fs');
-const Sequelize = require('sequelize');
-console.log(process.env.DB_HOST)
-const host = process.env.DB_HOST
-
+const { Sequelize, DataTypes } = require('sequelize');
 const db = {
     name: process.env.DB_NAME,
     user: process.env.DB_USER,
@@ -27,15 +24,19 @@ const sequelize = new Sequelize(db.name, db.user, db.pass,
         }
     });
 
+    const User = sequelize.define('User', {
+        // Model attributes are defined here
+        firstName: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        lastName: {
+          type: DataTypes.STRING
+          // allowNull defaults to true
+        }
+      }, {
+        // Other model options go here
+      });
 (async ()=>{
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-      } catch (error) {
-        console.error('Unable to connect to the database:', error);
-      }
-}
-)().catch(err =>{
-    console.log(err);
-});
-  
+    User.sync();
+})()
