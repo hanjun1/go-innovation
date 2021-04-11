@@ -25,6 +25,10 @@ const sequelize = new Sequelize(db.name, db.user, db.pass, {
   },
 });
 
+sequelize.authenticate()
+    .then(() => console.log("Database connected..."))
+    .catch(err =>  console.log("Error: " + err))
+
 const UserModel = require("../models/UserModel");
 const User = sequelize.define(
   "User",
