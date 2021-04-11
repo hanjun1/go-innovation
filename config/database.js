@@ -26,17 +26,16 @@ const sequelize = new Sequelize(db.name, db.user, db.pass,
 
     const User = sequelize.define('User', {
         // Model attributes are defined here
-        firstName: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        lastName: {
-          type: DataTypes.STRING
-          // allowNull defaults to true
-        }
+        firstName: {type: DataTypes.STRING},
+        lastName: {type: DataTypes.STRING},
+        avatar: {type: DataTypes.STRING},
+        email: {type: DataTypes.STRING,
+            allowNull: false},
+        googleId: {type: DataTypes.STRING,
+                allowNull: false},
       }, {
         // Other model options go here
       });
 (async ()=>{
-    User.sync();
+    User.sync({force: true});
 })()
