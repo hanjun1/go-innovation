@@ -1,20 +1,98 @@
-<%- include('partials/head_default') %> 
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/auth/google">Login</a></li>
-    <li><a href="/logout">Logout</a></li>
-    <li><a href="#">Profile</a></li>
-    <li><a href="#">Settings</a></li>
-    <li><a href="https://tinyurl.com/d7fv66j2">TOP SECRET</a></li>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='/stylesheets/reset.css' />
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title>REPLACE</title>
+</head>
 
   </ul>
 </nav>
 <body>
-  <h1>
-    <%= title %>
-  </h1>
-  <p>Splash page for <%= title %>
-  </p>
-  
-<%- include('partials/foot_default') %> 
+  <div class="main-container">
+    <div class="menu-container">
+      <div class="button-container">Settings</div>
+      <div class="button-container">Add Item</div>
+      <div class="button-container">Medications</div>
+      <div class="button-container">Bills</div>
+      <div class="button-container">Appointments</div>
+      <div class="button-container">Reminders</div>
+    </div>
+    <div class="middle-container">
+      <div class="welcome-message-container">
+        <p>Good Morning X</p>
+        <p>Type in any new activity or item! We will sort it in the right category for you!</p>
+      </div>
+      <div class="main-sub-container">
+        <div class="main-all-container">
+          <p>ALL</p>
+        </div>
+        <div class="main-settings-container hidden">
+          <p class="close-btn"><span class="close">X</span></p>
+          <p>SETTINGS</p>
+        </div>
+        <div class="main-add-items-container hidden">
+          <p class="close-btn"><span class="close">X</span></p>
+          <p>Add Items</p>
+        </div>
+        <div class="main-medications-container hidden">
+          <p class="close-btn"><span class="close">X</span></p>
+          <p>MEDICATIONS</p>
+        </div>
+        <div class="main-bills-container hidden">
+          <p class="close-btn"><span class="close">X</span></p>
+          <p>BILLS</p>
+        </div>
+        <div class="main-appointments-container hidden">
+          <p class="close-btn"><span class="close">X</span></p>
+          <p>APPOINTMENTS</p>
+        </div>
+        <div class="main-reminders-container hidden">
+          <p class="close-btn"><span class="close">X</span></p>
+          <p>REMINDERS</p>
+        </div>
+      </div>
+    </div>
+    <div class="notifications-container">
+      <div class="notification-container">
+        <div class="notification-header-container">
+          <div class="image-container">
+            IMG
+          </div>
+          <div class="desription-container">
+            <p>Sam wants to know:</p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. </p>
+          </div>
+        </div>
+        <div class="notification-button-container">
+          <button>Yes</button>
+          <button>I'm about to.</button>
+          <button>No, I forgot</button>
+        </div>
+      </div>
+      <div class="notification-container">
+        <div class="notification-header-container">
+          <div class="image-container">
+            IMG
+          </div>
+          <div class="description-container">
+            <p>Peter wants to know:</p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. </p>
+          </div>
+        </div>
+        <div class="notification-button-container">
+          <button>Yes</button>
+          <button>I'm about to.</button>
+          <button>No, I forgot</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/javascripts/index.js"></script>
+</body>
+
+</html>

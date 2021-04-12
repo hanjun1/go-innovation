@@ -1,4 +1,8 @@
 .DS_Store
 node_modules/
+<<<<<<< HEAD
 .env
 pem
+=======
+.env
+>>>>>>> main
