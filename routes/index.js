@@ -4,6 +4,7 @@ let passport = require('passport');
 var sequelize = require('../config/database')
 var Users = sequelize.models.User;
 let indexCtrl = require("../controllers/index");
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
       return next()
