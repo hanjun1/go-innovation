@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var sequelize = require('../config/database').sequelize
+var sequelize = require('../config/database')
 var Users = sequelize.models.User;
 
 passport.use(new GoogleStrategy({

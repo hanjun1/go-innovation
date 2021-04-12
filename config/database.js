@@ -25,12 +25,7 @@ const sequelize = new Sequelize(db.name, db.user, db.pass, {
   },
 });
 
-const UserModel = require("../models/UserModel");
-const User = sequelize.define(
-  "User",
-  UserModel.Model,
-  UserModel.Options,
-);
+
 
 //  HOW DO I MAKED MIGRATE??!!
 
@@ -38,7 +33,5 @@ const User = sequelize.define(
     User.sync({force: true});
 })()  */
 
-dbExport.sequelize = sequelize;
-dbExport.Sequelize = Sequelize;
 
-module.exports = dbExport;
+module.exports = sequelize;

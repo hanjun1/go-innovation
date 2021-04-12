@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let passport = require('passport');
-var sequelize = require('../config/database').sequelize
+var sequelize = require('../config/database')
 var Users = sequelize.models.User;
 
 function isLoggedIn(req, res, next){
