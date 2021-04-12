@@ -26,12 +26,4 @@ const sequelize = new Sequelize(db.name, db.user, db.pass, {
 });
 
 
-
-//  HOW DO I MAKED MIGRATE??!!
-
-/*  (async ()=>{
-    User.sync({force: true});
-})()  */
-
-
 module.exports = sequelize;
