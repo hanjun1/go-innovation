@@ -15,7 +15,6 @@ var reminderRouter = require('./routes/reminder');
 
 var app = express();
 
-require('./config/database');
 require('./config/passport');
 
 

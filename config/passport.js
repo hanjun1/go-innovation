@@ -1,9 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var sequelize = require('../config/database')
-const { DataTypes } = require("sequelize")
-var Users = require("../models/User")(sequelize, DataTypes)
-
+var db = require('../models')
+var Users = db.User
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_SECRET,

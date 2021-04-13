@@ -1,35 +1,37 @@
 var express = require("express");
 var router = express.Router();
-let passport = require('passport');
-var sequelize = require('../config/database')
-var Users = sequelize.models.User;
+var db = require('../models/');
+var Users = db.User;
+// sequelize.User = sequelize.import('../models/User')
 let indexCtrl = require("../controllers/index");
-
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
       return next()
   }
   res.redirect("/auth/google");
 }
-
-
 router.get('/success', isLoggedIn, function(req, res, next) {
-  res.send("SUCCESS");
+  res.render('demo');
 });
 router.get('/failure', function(req, res, next) {
   res.send("failure");
 });
 
 
-router.get('/test', function(req, res, next) {
-  Users.create({
-    // Model attributes are defined here
-    firstName:"Fred",
-    lastName: "Flinstone",
-    avatar: "https://placekitten.com/200/300",
-    email: "fred@isdead.com",
-    googleId: "1234567890",
-  })
+router.get('/test', async function(req, res, next) {
+  try{
+    await Users.create({
+      firstName: "Fred",
+      lastName: "Dead",
+      displayName: "Fred",
+      avatar: "http://placekitten.com/200/300",
+      email: "fred@fred.com",
+      googleId: "123456789"})
+  }catch(err){
+    console.log(err)
+  }
+
+  
   res.send("Hello, World");
 });
 
