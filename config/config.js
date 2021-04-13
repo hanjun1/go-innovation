@@ -8,11 +8,11 @@ const db = {
   ssl: {
     rejectUnauthorized: false,
     //server cert
-    ca: fs.readFileSync("config/pem/server-ca.pem").toString(),
+    ca: process.env.DB_SERVER_CA,
     //client key
-    key: fs.readFileSync("config/pem/client-key.pem").toString(),
+    key: process.env.DB_CLIENT_KEY,
     //client cert
-    cert: fs.readFileSync("config/pem/client-cert.pem").toString(),
+    cert: process.env.DB_CLIENT_CERT
   },
 };
 

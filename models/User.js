@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      
+        this.myAssociation = this.hasOne(models.Threads, { foreignKey: "user1"})
+        this.myAssociation = this.hasOne(models.Threads, { foreignKey: "user2"})
     }
   };
   User.init({
@@ -17,19 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     displayName: DataTypes.STRING,
     avatar: DataTypes.STRING,
-<<<<<<< HEAD
-    email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-    },
-    googleId: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-=======
     email: DataTypes.STRING,
     googleId: DataTypes.STRING,
->>>>>>> main
+    
   }, {
     sequelize,
     modelName: 'User',
