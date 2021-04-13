@@ -4,15 +4,12 @@ let passport = require('passport');
 var sequelize = require('../config/database')
 var Users = sequelize.models.User;
 let indexCtrl = require("../controllers/index");
-
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
       return next()
   }
   res.redirect("/auth/google");
 }
-
-
 router.get('/success', isLoggedIn, function(req, res, next) {
   res.send("SUCCESS");
 });
