@@ -1,4 +1,41 @@
 <div class="main-add-items-container hidden">
     <p class="close-btn"><span class="close">X</span></p>
-    <p>Add Items</p>
+    <div>
+        <textarea id="input"></textarea>
+        <button id="submit-button">submit</button>
+        <h5>Category:</h5>
+        <input type="text" id="category-input">
+    </div>
+
+
+    <script>
+        let input = document.getElementById("input")
+        let submitButton = document.getElementById("submit-button")
+        let category = document.getElementById("category-input")
+
+        submitButton.addEventListener("click", getCategory)
+
+
+        async function getCategory(e) {
+            let body = { "input": input.value }
+            //send input to controller function fillForm
+            const response = await fetch("/fillForm", {
+                method: 'POST',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(body)
+            }).then(res => res.text());
+            category.value = response;
+
+            console.log(response)
+
+        }
+
+
+    </script>
 </div>

@@ -12,9 +12,7 @@ const modelId = 'TCN5642511154816221184';
 
 
 async function index(req, res) {
-  // let category = await predictCategory()
-  // console.log(category)
-  res.render("newReminder");
+  res.render("index");
 }
 
 
