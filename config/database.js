@@ -1,30 +1,10 @@
-const fs = require("fs");
-const { Sequelize, DataTypes } = require("sequelize");
-const dbExport = {};
-const db = {
-  name: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  pass: process.env.DB_PASS,
-  host: process.env.DB_HOST,
-  ssl: {
-    rejectUnauthorized: false,
-    //server cert
-    ca: fs.readFileSync("config/pem/server-ca.pem").toString(),
-    //client key
-    key: fs.readFileSync("config/pem/client-key.pem").toString(),
-    //client cert
-    cert: fs.readFileSync("config/pem/client-cert.pem").toString(),
-  },
-};
+const { Sequelize } = require("sequelize");
+/* to switch from development to test or production, mdify this require V */
+const config = require('./config').development;
 
-const sequelize = new Sequelize(db.name, db.user, db.pass, {
-  host: db.host,
-  dialect: "postgres",
-  dialectOptions: {
-    ssl: db.ssl,
-  },
-});
+const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+<<<<<<< HEAD
 sequelize.authenticate()
     .then(() => console.log("Database connected..."))
     .catch(err =>  console.log("Error: " + err))
@@ -46,3 +26,6 @@ dbExport.sequelize = sequelize;
 dbExport.Sequelize = Sequelize;
 
 module.exports = dbExport;
+=======
+module.exports = sequelize;
+>>>>>>> b0829a21011d4eb11e76982773f65764e8d7f048

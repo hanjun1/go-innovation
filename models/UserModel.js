@@ -1,4 +1,5 @@
 const {DataTypes} = require('sequelize');
+const sequelize = require('../config/database');
 
 let UserModel = {
     // Model attributes are defined here
@@ -14,7 +15,8 @@ let UserModel = {
   
 let UserModelOptions = {};
   
-module.exports = {
-    Model: UserModel,
-    Options: UserModelOptions,
-};
+const User = sequelize.define(
+  "User",
+  UserModel.Model,
+  UserModel.Options,
+);

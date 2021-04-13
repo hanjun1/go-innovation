@@ -1,8 +1,9 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 let passport = require('passport');
-var sequelize = require('../config/database').sequelize
+var sequelize = require('../config/database')
 var Users = sequelize.models.User;
+let indexCtrl = require("../controllers/index");
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
@@ -11,10 +12,7 @@ function isLoggedIn(req, res, next){
   res.redirect("/auth/google");
 }
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Remind' });
-});
+
 router.get('/success', isLoggedIn, function(req, res, next) {
   res.send("SUCCESS");
 });
@@ -34,5 +32,9 @@ router.get('/test', function(req, res, next) {
   })
   res.send("Hello, World");
 });
+
+
+/* GET home page. */
+router.get("/", indexCtrl.index);
 
 module.exports = router;
