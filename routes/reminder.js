@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/database");
-const Reminder = require("../models/ReminderModel");
+const Reminder = require("../models/Reminder");
 
 router.get("/", (req, res) => {
     Reminder.findAll()
