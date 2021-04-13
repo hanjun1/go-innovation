@@ -41,6 +41,5 @@ const Reminder = db.sequelize.define("Reminder", {
 }, {
 
 })
-
   // Other model options go here
 module.exports = Reminder
