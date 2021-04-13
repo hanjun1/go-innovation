@@ -1,5 +1,6 @@
 module.exports = {
   index,
+  fillForm
 };
 
 //Google AutoML
@@ -8,7 +9,7 @@ const client = new PredictionServiceClient();
 const projectId = '819100513794';
 const location = 'us-central1';
 const modelId = 'TCN5642511154816221184';
-const content = 'take dog for walk'
+
 
 async function index(req, res) {
   // let category = await predictCategory()
@@ -17,7 +18,9 @@ async function index(req, res) {
 }
 
 
-async function predictCategory() {
+async function fillForm(req, res) {
+  console.log(req.body.input)
+  const content = req.body.input
   const request = {
       name: client.modelPath(projectId, location, modelId),
       payload: {
@@ -29,7 +32,8 @@ async function predictCategory() {
   };
   const [response] = await client.predict(request);
   let category = response.payload[0].displayName
-  return category
+  console.log(category)
+  return res.send(category)
 }
 
 

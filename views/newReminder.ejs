@@ -21,9 +21,28 @@
     let submitButton = document.getElementById("submit-button")
     let category = document.getElementById("category-input")
 
-    submitButton.addEventListener("click", function (e) {
-        console.log(input.value)
-    })
+    submitButton.addEventListener("click", getCategory)
+
+
+    async function getCategory(e) {
+        let body = { "input": input.value }
+        //send input to controller function fillForm
+        const response = await fetch("/fillForm", {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': "application/json"
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer',
+            body: JSON.stringify(body)
+        }).then(res => res.text());
+        category.value = response;
+
+        console.log(response)
+
+    }
 
 
 </script>
