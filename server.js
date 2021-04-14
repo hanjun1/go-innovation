@@ -11,6 +11,8 @@ require('dotenv').config()
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var reminderRouter = require('./routes/reminder');
+var assistantRouter = require('./routes/assistant');
+
 
 
 var app = express();
@@ -41,6 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 app.use('/reminders', reminderRouter);
+app.use('/h', assistantRouter);
+
 
 
 // catch 404 and forward to error handler

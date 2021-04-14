@@ -12,7 +12,7 @@ function isLoggedIn(req, res, next){
   res.redirect("/auth/google");
 }
 router.get('/success', isLoggedIn, function(req, res, next) {
-  res.render('demo');
+  res.send("success")
 });
 router.get('/failure', function(req, res, next) {
   res.send("failure");
@@ -21,13 +21,14 @@ router.get('/failure', function(req, res, next) {
 
 router.get('/test', async function(req, res, next) {
   try{
-    await Users.create({
-      firstName: "Fred",
-      lastName: "Dead",
-      displayName: "Fred",
-      avatar: "http://placekitten.com/200/300",
-      email: "fred@fred.com",
-      googleId: "123456789"})
+    await db.Reminder.create({
+      settings: "blah",
+      title: "A Reminder Title",
+      description: "A description of a reminder",
+      category: "appt",
+      userId: 1,
+      authorId: 1,
+    })
   }catch(err){
     console.log(err)
   }
