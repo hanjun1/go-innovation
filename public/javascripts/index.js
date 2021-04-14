@@ -16,21 +16,27 @@ function openWindow(e) {
   switch (menu) {
     case "Settings":
       refreshWindow("main-settings-container");
+    //   generateData("Settings")
       break;
     case "Add Item":
       refreshWindow("main-add-items-container");
+    //   generateData("Add Item")
       break;
     case "Medications":
       refreshWindow("main-medications-container");
+      generateData("Medications")
       break;
     case "Bills":
       refreshWindow("main-bills-container");
+      generateData("Bills")
       break;
     case "Appointments":
       refreshWindow("main-appointments-container");
+      generateData("Appointments")
       break;
     case "Reminders":
       refreshWindow("main-reminders-container");
+      generateData("Reminders")
       break;
   }
 }
@@ -47,4 +53,37 @@ function refreshWindow(menuName) {
       mainSubContainer.children[i].classList.remove("hidden");
     }
   }
+}
+
+function generateData(category) {
+    const url = `/api/category/${category}/`
+    const json_upload = JSON.stringify({
+        "test": "hello"
+    });
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true)
+    http.setRequestHeader("Content-Type", "application/json");
+    http.onreadystatechange = (e) => {
+        if (http.readyState == 4 && http.status === 200) {
+            console.log(http.response)
+        }
+    }
+    http.send(json_upload)
+    // const response = JSON.parse(http.responseText)
+}
+
+
+function changeScore(id, num) {
+    const trip_id = document.querySelector("#trip_id").value;
+    const url = "/api/vote"
+    const json_upload = JSON.stringify({
+        "trip_id" : trip_id,
+        "item_id" : id,
+        "change_value" : num.toString()
+    });
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.setRequestHeader('X-CSRFToken', csrftoken);
+    http.send(json_upload);
+    
 }
