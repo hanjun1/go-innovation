@@ -7,12 +7,12 @@ const db = {
   host: process.env.DB_HOST,
   ssl: {
     rejectUnauthorized: false,
-//server cert
-ca: fs.readFileSync("config/pem/server-ca.pem").toString(),
-//client key
-key: fs.readFileSync("config/pem/client-key.pem").toString(),
-//client cert
-cert: fs.readFileSync("config/pem/client-cert.pem").toString(),
+    //server cert
+    ca: process.env.DB_SERVER_CA,
+    //client key
+    key: process.env.DB_CLIENT_KEY,
+    //client cert
+    cert: process.env.DB_CLIENT_CERT
   },
 };
 
