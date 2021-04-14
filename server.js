@@ -6,7 +6,6 @@ var session = require('express-session');
 var passport = require('passport');
 var logger = require('morgan');
 const cors = require("cors");
-const Sequelize = require("sequelize")
 
 require('dotenv').config()
 
