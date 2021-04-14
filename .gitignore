@@ -3,3 +3,4 @@ node_modules/
 .env
 reminder-classification-386e23ba5af3.json
 pem
+config2.js
