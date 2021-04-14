@@ -32,17 +32,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-var SequelizeStore = require("connect-session-sequelize")(session.Store);
-const sequelize = new Sequelize(require("./config/config").development)
-
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  store: new SequelizeStore({
-      db: sequelize
-  }),
-  proxy: true
 }))
 
 app.use(passport.initialize());
