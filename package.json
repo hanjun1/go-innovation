@@ -8,7 +8,9 @@
   "dependencies": {
     "@google-cloud/automl": "^2.4.1",
     "body-parser": "^1.18.3",
+    "connect-session-sequelize": "^7.1.1",
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",

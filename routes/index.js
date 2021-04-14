@@ -50,6 +50,9 @@ router.get('/test-thread', async function(req, res, next) {
     res.send("Hello, World");
   });
 
+router.get("/bt", (req, res) => {
+    res.render("bt")
+})
 
 
 /* GET home page. */
