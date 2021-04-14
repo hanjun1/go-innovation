@@ -1,9 +1,17 @@
 var express = require('express');
 var router = express.Router();
-
-const { conversation, Image } = require("@assistant/conversation");
-const {Table} = require('actions-on-google')
+var getMatch = require('../controllers/speech').getMatch
+const { conversation } = require("@assistant/conversation");
+var getMatch = require('../controllers/speech').getMatch;
 const User = require('../models').User
+const Reminder = require('../models').Reminder
+
+/* 
+Bills
+Appointments
+Medications
+Tasks
+*/
 
 const app = conversation({
     clientId: process.env.ACTIONS_CLIENT_ID
@@ -23,19 +31,70 @@ const app = conversation({
     
   
   }
+  /* Reminder{
+    settings: str(255),
+    userId: int(),
+    authorId: int(),
+    title: str(255),
+    description: str(255),
+    category: str(255),
+    startDate: timestamp with timezone, (2021-04-14 03:14:03.97+00)
+    endDate: ""
+    threadId: int(),
+  } */
   
-app.handle("TEST", async conv =>{
+  Date.prototype.addHours = function(int){
+    this.setHours(this.getHours()+int)
+    return this;
+  }
+  
+  app.handle("CREATE", async conv =>{
     try{
-        conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, welcome to Reminder`)    
-        console.log(conv.user.params)
+        let returnJSON = {}
+        let parsed = await getMatch(conv.intent.params.reminder.resolved);
+        let returnMessage = `Creating a new reminder called: ${parsed.input}.`
+        let parsedDate;
+        if (parsed.datetime){
+          parsedDate = new Date(parsed.datetime)
+          returnMessage += `Taking place on: ${parsedDate.toDateString()},`
+          if (parsed.grain && (parsed.grain=="hour" ||parsed.grain=="minute"||parsed.grain=="second" )){
+            returnMessage += `at ${parsedDate.toLocaleTimeString('en-US')}`;
+          }
+        }
+        let thisUser = await getUser(conv.user.params.tokenPayload)
+        console.log("id",thisUser.dataValues.id)
+
+         await Reminder.create({
+          settings: JSON.stringify({settings: "test"}),
+          userId: parseInt(thisUser.dataValues.id),
+          authorId: parseInt(thisUser.dataValues.id),
+          title: parsed.input,
+          description: "Add a description",
+          category: parsed.category,
+          startDate: parsed.datetime,
+          endDate: parsedDate.addHours(1).toString(),
+          // threadId: int(),
+        }); 
+        conv.add(returnMessage);
+        
     }catch(err){
         console.log(err);
     }
     
     
 })
+
+app.handle("FINAL", async conv =>{
+  try{
+      conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, welcome to Reminder`)    
+      console.log(conv.user)
+  }catch(err){
+      console.log(err);
+  }
+  
+  
+})
 app.handle("CHECK_USER", async conv => {
-    let message = "";
     try{
         let thisUser = await getUser(conv.user.params.tokenPayload)
         if(thisUser){
