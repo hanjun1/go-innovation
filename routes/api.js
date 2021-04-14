@@ -5,8 +5,8 @@ const apiCtrl = require("../controllers/api")
 let passport = require('passport');
 
 
-router.get("/create/reminder/:num", cors(), apiCtrl.isLoggedIn, apiCtrl.createReminderData)
-router.get('/category/:category', cors(), apiCtrl.isLoggedIn, apiCtrl.getCategoryData)
+router.get("/create/reminder/:num", cors(), apiCtrl.createReminderData)
+router.get('/category/:category', cors(), apiCtrl.getCategoryData)
 // router.post('/medications', cors(), apiCtrl.isLoggedIn, apiCtrl.getCategoryData)
 
 
