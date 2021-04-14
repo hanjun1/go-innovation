@@ -10,6 +10,9 @@ const projectId = '819100513794';
 const location = 'us-central1';
 const modelId = 'TCN5642511154816221184';
 
+//wit entity extraction
+const {Wit, log} = require('node-wit');
+const MY_TOKEN = 'PHADUGLQZAA4A4IW2SY3FZHWGIDCQGSO'
 
 async function index(req, res) {
   res.render("index");
@@ -19,6 +22,8 @@ async function index(req, res) {
 async function fillForm(req, res) {
   console.log(req.body.input)
   const content = req.body.input
+
+  // Google autoML categorization API Call
   const request = {
       name: client.modelPath(projectId, location, modelId),
       payload: {
@@ -31,7 +36,15 @@ async function fillForm(req, res) {
   const [response] = await client.predict(request);
   let category = response.payload[0].displayName
   console.log(category)
-  return res.send(category)
+
+  // Wit Datetime extraction API Call
+  const client1 = new Wit({accessToken: MY_TOKEN});
+  let datetime = await client1.message(content, {})
+  datetime = datetime.entities['wit$datetime:datetime'][0].value
+
+  console.log(datetime)
+  
+  return res.send({category: category, datetime: datetime})
 }
 
 

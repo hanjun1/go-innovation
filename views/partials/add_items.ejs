@@ -2,11 +2,15 @@
     <p class="close-btn"><span class="close">X</span></p>
     <div>
         <button id="record-button"><img
-                src="https://img.icons8.com/flat-round/64/000000/microphone--v1.png" /></button>Hold to talk <br>
+                src="https://img.icons8.com/flat-round/64/000000/microphone--v1.png" /></button>Hold to talk <br><br>
         <textarea id="input"></textarea>
         <button id="submit-button">submit</button>
         <h5>Category:</h5>
         <input type="text" id="category-input">
+        <h5>Date:</h5>
+        <input type="date" id="date-input">
+        <h5>Time:</h5>
+        <input type="time" id="time-input">
     </div>
 
 
@@ -15,6 +19,8 @@
         let input = document.getElementById("input")
         let submitButton = document.getElementById("submit-button")
         let category = document.getElementById("category-input")
+        let date = document.getElementById("date-input")
+        let time = document.getElementById("time-input")
         let recordButton = document.getElementById("record-button")
 
         //---------------state Variables------------//    
@@ -50,7 +56,7 @@
         });
 
 
-        //---------------AJAX call to Google ML API------------//
+        //---------------AJAX call to Server------------//
         async function getCategory(e) {
             let body = { "input": input.value }
             //send input to controller function fillForm
@@ -64,10 +70,16 @@
                 redirect: 'follow',
                 referrerPolicy: 'no-referrer',
                 body: JSON.stringify(body)
-            }).then(res => res.text());
-            category.value = response;
-
+            }).then(res => res.json());
             console.log(response)
+
+            // set category input
+            category.value = response["category"];
+
+            // set date and time input
+            datetime = new Date(response.datetime)
+            date.value = datetime.toISOString().slice(0, 10)
+            time.value = datetime.toTimeString().slice(0, 5)
         }
 
     </script>
