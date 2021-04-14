@@ -1,6 +1,8 @@
 <div class="main-add-items-container hidden">
     <p class="close-btn"><span class="close">X</span></p>
     <div>
+        <button id="record-button"><img
+                src="https://img.icons8.com/flat-round/64/000000/microphone--v1.png" /></button>Hold to talk <br>
         <textarea id="input"></textarea>
         <button id="submit-button">submit</button>
         <h5>Category:</h5>
@@ -9,13 +11,46 @@
 
 
     <script>
+        //---------------Cached Variables------------//    
         let input = document.getElementById("input")
         let submitButton = document.getElementById("submit-button")
         let category = document.getElementById("category-input")
+        let recordButton = document.getElementById("record-button")
 
+        //---------------state Variables------------//    
+        let recordingOn = false;
+
+        //---------------Event Listeners below------------//
         submitButton.addEventListener("click", getCategory)
 
+        // Start Listening on button hold
+        recordButton.addEventListener("mousedown", function (e) {
+            if (recordingOn == false) {
+                recognition.start();
+                recordingOn = true;
+            }
+        })
 
+        // Stop listening on button release
+        recordButton.addEventListener("mouseup", function (e) {
+            if (recordingOn == true) {
+                recognition.stop();
+                recordingOn = false;
+            }
+        })
+
+        //---------------WebSpeech Recognition API------------//
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+
+        recognition.addEventListener("result", function (e) {
+            const text = e.results[0][0].transcript;
+            input.value = text;
+        });
+
+
+        //---------------AJAX call to Google ML API------------//
         async function getCategory(e) {
             let body = { "input": input.value }
             //send input to controller function fillForm
@@ -33,9 +68,7 @@
             category.value = response;
 
             console.log(response)
-
         }
-
 
     </script>
 </div>
