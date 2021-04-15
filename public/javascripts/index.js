@@ -69,21 +69,4 @@ function generateData(category) {
         }
     }
     http.send(json_upload)
-    // const response = JSON.parse(http.responseText)
-}
-
-
-function changeScore(id, num) {
-    const trip_id = document.querySelector("#trip_id").value;
-    const url = "/api/vote"
-    const json_upload = JSON.stringify({
-        "trip_id" : trip_id,
-        "item_id" : id,
-        "change_value" : num.toString()
-    });
-    const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.setRequestHeader('X-CSRFToken', csrftoken);
-    http.send(json_upload);
-    
 }
