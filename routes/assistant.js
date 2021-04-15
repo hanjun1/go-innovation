@@ -5,6 +5,8 @@ const { conversation } = require("@assistant/conversation");
 var getMatch = require('../controllers/speech').getMatch;
 const User = require('../models').User
 const Reminder = require('../models').Reminder
+const {Op} = require('sequelize');
+
 /* 
 Bills
 Appointments
@@ -89,21 +91,70 @@ const app = conversation({
     
 })
 
-app.handle("FINAL", async conv =>{
+app.handle("GET_BILLS", async conv =>{
   try{
-      conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, welcome to Reminder`)    
+      conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, GET BILLS GOES HERE`)    
       console.log(conv.user)
   }catch(err){
       console.log(err);
   }
-  
-  
 })
+
+app.handle("GET_MEDS", async conv =>{
+  try{
+      conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, GET MEDS GOES HERE`)    
+      console.log(conv.user)
+  }catch(err){
+      console.log(err);
+  }
+})
+
+app.handle("GET_APPTS", async conv =>{
+  try{
+      conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, GET APPOINTMENTS`)    
+      console.log(conv.user)
+  }catch(err){
+      console.log(err);
+  }
+})
+
+app.handle("GET_TASKS", async conv =>{
+  try{
+      conv.add(`TASKS GO HERE`)    
+      console.log(conv.user)
+  }catch(err){
+      console.log(err);
+  }
+})
+app.handle("GET_ALL", async conv =>{
+  try{
+    let today = new Date();
+    let tomorrow = new Date()
+    tomorrow.setDate(today.getDate()+1)
+    console.log(today, tomorrow)
+    let allReminders = await Reminder.findAll({
+        where: {
+          userId: conv.user.params.uid,
+          startDate: {
+            [Op.gte]: today,
+            [Op.lte]: tomorrow, 
+          }
+        }
+      })
+      conv.add(`Hello ${conv.user.params.tokenPayload.given_name}, GET TASKS`)    
+      console.log(allReminders)
+  }catch(err){
+      console.log(err);
+  }
+})
+
+
 app.handle("CHECK_USER", async conv => {
     try{
         let thisUser = await getUser(conv.user.params.tokenPayload)
         if(thisUser){
-        conv.user.params.test = "test"
+        conv.user.params.uid = thisUser.dataValues.id
+        console.log(conv.user.params.user)
         conv.add(`Hello ${thisUser.firstName}, how can I help you?`)
         /* conv.add(
             new Image({
