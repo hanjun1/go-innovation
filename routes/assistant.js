@@ -5,13 +5,14 @@ const { conversation } = require("@assistant/conversation");
 var getMatch = require('../controllers/speech').getMatch;
 const User = require('../models').User
 const Reminder = require('../models').Reminder
-
 /* 
 Bills
 Appointments
 Medications
 Tasks
 */
+//ghetto sequelize patch for date rendering
+
 
 const app = conversation({
     clientId: process.env.ACTIONS_CLIENT_ID
@@ -52,30 +53,34 @@ const app = conversation({
     try{
         let returnJSON = {}
         let parsed = await getMatch(conv.intent.params.reminder.resolved);
-        let returnMessage = `Creating a new reminder called: ${parsed.input}.`
+        let returnMessage = `Creating a new reminder called: "${parsed.input}" `
         let parsedDate;
         if (parsed.datetime){
           parsedDate = new Date(parsed.datetime)
-          returnMessage += `Taking place on: ${parsedDate.toDateString()},`
+          console.log(parsedDate.toISOString())
+          console.log(parsed.datetime)
+          returnMessage += `This will take place on: ${parsedDate.toDateString()}, `
           if (parsed.grain && (parsed.grain=="hour" ||parsed.grain=="minute"||parsed.grain=="second" )){
-            returnMessage += `at ${parsedDate.toLocaleTimeString('en-US')}`;
+            let timeStr = parsedDate.toLocaleTimeString('en-US');
+            returnMessage += ` at ${timeStr.slice(0,-6)+timeStr.slice(-2)}`;
           }
         }
         let thisUser = await getUser(conv.user.params.tokenPayload)
         console.log("id",thisUser.dataValues.id)
 
-         await Reminder.create({
-          settings: JSON.stringify({settings: "test"}),
+        await Reminder.create({
+          settings: JSON.stringify({settings: "fred"}),
           userId: parseInt(thisUser.dataValues.id),
           authorId: parseInt(thisUser.dataValues.id),
           title: parsed.input,
           description: "Add a description",
           category: parsed.category,
           startDate: parsed.datetime,
-          endDate: parsedDate.addHours(1).toString(),
+          endDate: parsedDate.addHours(1).toISOString(),
           // threadId: int(),
-        }); 
+        });
         conv.add(returnMessage);
+        conv.add("What else can I help you with?")
         
     }catch(err){
         console.log(err);
