@@ -4,7 +4,7 @@ const Reminders = db.Reminder;
 
 module.exports = {
   index,
-  fillForm
+  fillForm,
 };
 
 //Google AutoML
@@ -16,7 +16,8 @@ const modelId = 'TCN5642511154816221184';
 
 //wit entity extraction
 const {Wit, log} = require('node-wit');
-const MY_TOKEN = 'PHADUGLQZAA4A4IW2SY3FZHWGIDCQGSO'
+const MY_TOKEN = process.env.MY_TOKEN
+const client1 = new Wit({accessToken: MY_TOKEN});
 
 async function index(req, res) {
     const now = new Date()
@@ -87,5 +88,4 @@ async function fillForm(req, res) {
   
   return res.send({category: category, datetime: datetime})
 }
-
 

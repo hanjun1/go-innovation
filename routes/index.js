@@ -5,36 +5,27 @@ var Users = db.User;
 const Threads = db.Threads
 // sequelize.User = sequelize.import('../models/User')
 let indexCtrl = require("../controllers/index");
+
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
       return next()
   }
   res.redirect("/auth/google");
 }
-router.get('/success', isLoggedIn, function(req, res, next) {
-  res.render('demo');
+
+router.get('/success', async function(req, res) {
+  if(req.user){
+    
+    res.send("success")  
+  }else{
+    res.send("fail")  
+  }
 });
-router.get('/failure', function(req, res, next) {
+router.get('/failure', async function(req, res, next) {
   res.send("failure");
 });
 
-
-router.get('/test', async function(req, res, next) {
-  try{
-    await Users.create({
-      firstName: "Fred",
-      lastName: "Dead",
-      displayName: "Fred",
-      avatar: "http://placekitten.com/200/300",
-      email: "fred@fred.com",
-      googleId: "123456789"})
-  }catch(err){
-    console.log(err)
-  }
-
-  
-  res.send("Hello, World");
-});
 
 router.get('/test-thread', async function(req, res, next) {
     try{
