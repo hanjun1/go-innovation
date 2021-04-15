@@ -7,6 +7,7 @@ module.exports = {
     isLoggedIn,
     createReminderData,
     getCategoryData,
+    changeCheckbox
 };
 
 function isLoggedIn(req, res, next){
@@ -118,7 +119,7 @@ function createReminderData(req, res) {
         Reminders.create({
             startDate: new Date(startDate),
             endDate: new Date(endDate),
-            ThreadId: 1,
+            ReminderChainId: 0,
             settings: "{}",
             userId: 2,
             authorId: 2,
@@ -130,6 +131,23 @@ function createReminderData(req, res) {
     res.send(response)
 }
 
+
+async function changeCheckbox(req, res) {
+    const category = req.params.category
+    const user = await Users.findOne({ where: {'id': 2} })
+    const reminder = await Reminders.findOne({ where: {
+        id: req.body.reminderId
+    }})
+    reminder.checked = req.body.checked
+    await reminder.save()
+    res.status(200).send("value changed")
+}
+
+
+
+
+
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+

@@ -25,7 +25,7 @@
                   <div class="row d-flex">
                   <% } %>
                     <div class="col-2 text-end">
-                      <% const time = data[i].dataValues.startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).split(" ") %>
+                      <% const time = data[i].startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).split(" ") %>
                       <% if (time[0].length == 4) { %>
                       <p style="font-size: larger;">0<%= time[0] %></p>
                       <% } else { %>
@@ -34,7 +34,7 @@
                       <p style="font-size: smaller;"><%= time[1] %></p>
                     </div>
                     <div class="col-1 px-0 text-center align-self-center">
-                    <% const category = data[i].dataValues.category %> 
+                    <% const category = data[i].category %> 
                       <% if (category == "Medications") { %>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M14.7589 9.25052L10.8175 5.10783L4.93576 11.4807L8.79531 15.5438L8.79576 15.5434C9.55975 16.3457 10.614 16.8421 11.778 16.8421C14.1095 16.8421 16.0002 14.8519 16.0002 12.3976C16.0002 11.1682 15.5255 10.0552 14.7589 9.25052Z" fill="#8FC5A8"/>
@@ -63,14 +63,18 @@
                       <% } %>
                     </div>
                     <div class="col-4">
-                      <%= data[i].dataValues.title %>
+                      <%= data[i].title %>
                     </div>
                     <div class="col-4">
-                      <%= data[i].dataValues.category %>
+                      <%= data[i].category %>
                     </div>
                     <div class="col-1 text-end">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <% if (data[i].checked) { %>
+                          <input class="form-check-input item-checkbox" type="checkbox" name=<%= data[i].id %> value=<%= data[i].checked %> checked>
+                        <% } else { %>
+                          <input class="form-check-input item-checkbox" type="checkbox" name=<%= data[i].id %> value=<%= data[i].checked %>>
+                        <% } %>
                       </div>
                     </div>
                     <hr class="my-1" style="padding-top: 3px;"/>

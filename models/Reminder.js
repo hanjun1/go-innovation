@@ -23,7 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       category: DataTypes.STRING,
       startDate: DataTypes.DATE,
       endDate: DataTypes.DATE,
-      ThreadId: DataTypes.INTEGER,
+      checked: {
+          type: DataTypes.BOOLEAN,
+          default: false
+        },
+      ReminderChainId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Reminder',
