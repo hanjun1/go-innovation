@@ -30,23 +30,17 @@ async function getCategoryData(req, res) {
 }
 
 function createReminderData(req, res) {
-    const categories = ["Medications", "Bills", "Reminders", "Tasks"]
+    const categories = ["Medications", "Bills", "Appointments", "Tasks"]
+    const data = []
     for (let i = 0; i < req.params.num; i++) {
-        const date = new Date()
-        console.log(date)
-        const startDate = date.setDate(date.getDate() + randomIntFromInterval(1,7));
-        const endDate = startTime + 3600*2;
-        console.log(startTime, endTime)
-
-        const settings = {
-            start: new Date(startTime).toISOString().slice(0, 19).replace('T', ' '),
-            end: new Date(endTime).toISOString().slice(0, 19).replace('T', ' ')
-        }
-        
+        const date = Date.now() + randomIntFromInterval(-24, 24)*3600*1000 + randomIntFromInterval(-1, 30)*24*3600*1000
+        const startDate = roundMinutes(new Date(date))
+        const endDate = roundMinutes(new Date(date + 60*60*1000))
+        // console.log(date, startDate, endDate)
         Reminders.create({
-            startDate: new Date(startTime).toISOString().slice(0, 19).replace('T', ' '),
-            endDate: new Date(endTime).toISOString().slice(0, 19).replace('T', ' '),
-            threadId: 1,
+            startDate: startDate,
+            endDate: endDate,
+            ThreadId: 1,
             settings: "{}",
             userId: 2,
             authorId: 2,
@@ -60,4 +54,10 @@ function createReminderData(req, res) {
 
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+}
+
+function roundMinutes(date) {
+    date.setHours(date.getHours() + Math.round(date.getMinutes()/60));
+    date.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+    return date;
+}

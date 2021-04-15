@@ -1,4 +1,28 @@
 <div class="main-reminders-container hidden">
     <p class="close-btn"><span class="close">X</span></p>
     <p>REMINDERS</p>
+    <div class="reminders">
+      <% for (let i=0; i < data.length; i++) { %>
+        <% if (data[i].dataValues.category == "Tasks") {%> 
+          <% if (i > index) {%> 
+            <div class="row fw-bold">
+          <% } else { %>
+            <div class="row ">
+          <% } %>
+            <div class="col-3">
+              <%= data[i].dataValues.startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) %>
+            </div>
+            <div class="col-1">
+              ICON
+            </div>
+            <div class="col-4">
+              <%= data[i].dataValues.title %>
+            </div>
+            <div class="col-4">
+              <%= data[i].dataValues.category %>
+            </div>
+          </div>
+        <% } %>
+      <% } %>
+    </div>
 </div>

@@ -1,3 +1,7 @@
+const db = require("../models");
+const Op = require("../models/index").Sequelize.Op
+const Reminders = db.Reminder;
+
 module.exports = {
   index,
   fillForm
@@ -15,7 +19,44 @@ const {Wit, log} = require('node-wit');
 const MY_TOKEN = 'PHADUGLQZAA4A4IW2SY3FZHWGIDCQGSO'
 
 async function index(req, res) {
-  res.render("index");
+    const now = new Date()
+    // const beginDate = new Date(Date.now() - 3600*12*1000)
+    // const endDate = new Date(Date.now() + 3600*12*1000)
+    let beginDate, endDate;
+    if (now.getHours() < 4) {
+        beginDate = new Date(Date.now() - 3600*24*1000).setHours(4,0,0,0)
+        endDate = new Date(Date.now()).setHours(23,59,59,999)
+    } else if (now.getHours() < 4 ) {
+        beginDate = new Date(Date.now()).setHours(4,0,0,0)
+        endDate = new Date(Date.now() + 1).setHours(23,59,59,999)
+
+    } else {
+        beginDate = new Date(Date.now()).setHours(4,0,0,0)
+        endDate = new Date(Date.now() + 1).setHours(23,59,59,999)
+
+    }
+    const data = await Reminders.findAll({
+        where: {
+            userId: 2,
+            startDate: {
+               [Op.between]: [beginDate, endDate],
+            },
+          },
+          order: [['startDate', 'ASC']],
+    })
+    let index = data.length;
+    for (let i=0; i < data.length; i++ ) {
+        const date = data[i].dataValues.startDate 
+        if (date > now) {
+            index = i
+            break;
+        }
+    }
+    res.render("index", {
+        data: data,
+        index: index,
+        
+    });
 }
 
 
