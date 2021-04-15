@@ -14,8 +14,11 @@
         <input type="date" id="date-input" required>
         <h5>Time:</h5>
         <input type="time" id="time-input" required>
-        <h5>Recurring?</h5>
+        <h5>Recurrence?</h5>
         <input type="checkbox" id="recurrence-input">
+        <h5>Recurrence Interval</h5>
+        <input type="text" id="recurrence-interval-input"><br>
+        <button id="submit-form">Add Reminder</button>
     </div>
 
 
@@ -28,6 +31,8 @@
         let time = document.getElementById("time-input")
         let recordButton = document.getElementById("record-button")
         let action = document.getElementById("action-input")
+        let recurrence = document.getElementById("recurrence-input")
+        let recurrenceInterval = document.getElementById("recurrence-interval-input")
 
         //---------------state Variables------------//    
         let recordingOn = false;
@@ -85,12 +90,20 @@
             category.value = response.category;
 
             // set date and time input
-
-
             if (response.datetime !== "") {
                 datetime = new Date(response.datetime)
                 date.value = datetime.toISOString().slice(0, 10)
-                time.value = datetime.toTimeString().slice(0, 5)
+                time.value = datetime.toISOString().slice(11, 16)
+            }
+
+            // set recurrence and interval
+            if (response.repeat) {
+                recurrence.checked = true;
+                recurrenceInterval.value = response.repeatInterval;
+            }
+            else {
+                recurrence.checked = false;
+                recurrenceInterval.value = "";
             }
         }
 

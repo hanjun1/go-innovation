@@ -50,8 +50,7 @@ async function fillForm(req, res) {
 
     console.log(category);
 
-    // Wit entity extraction API Call
-
+    // Wit entity extraction API Call - action/datetime
     const client1 = new Wit({ accessToken: MY_TOKEN });
     let responseObject = await client1.message(content, {});
 
@@ -65,6 +64,86 @@ async function fillForm(req, res) {
     console.log(action);
     console.log(datetime);
 
-    return res.send({ category: category, datetime: datetime, action: action });
+    // Detect recurrance
+    let recurrance = getRepeat(content);
+
+    // response object
+    return res.send({
+      category: category,
+      datetime: datetime,
+      action: action,
+      ...recurrance,
+    });
   }
+}
+
+//checks if recurring and recurrence interval
+function getRepeat(content) {
+  let dict = [
+    {
+      interval: "daily",
+      keywords: [
+        "everyday",
+        "every day",
+        "each day",
+        "daily",
+        "every night",
+        "every morning",
+        "every evening",
+      ],
+    },
+    {
+      interval: "weekly",
+      keywords: [
+        "every week",
+        "weekly",
+        "each week",
+        "every mon",
+        "every tues",
+        "every wed",
+        "every thurs",
+        "every fri",
+        "every sat",
+        "every sun",
+        "sundays",
+        "mondays",
+        "tuesdays",
+        "wednesdays",
+        "thursdays",
+        "fridays",
+        "saturdays",
+      ],
+    },
+    {
+      interval: "monthly",
+      keywords: [
+        "every month",
+        "monthly",
+        "each month",
+        "every jan",
+        "every feb",
+        "every mar",
+        "every apr",
+        "every may",
+        "every jun",
+        "every jul",
+        "every aug",
+        "every sept",
+        "every oct",
+        "every nov",
+        "every dec",
+      ],
+    },
+  ];
+
+  let repeat = false;
+  let repeatInterval = "";
+
+  dict.forEach((element) => {
+    if (element.keywords.some((word) => content.toLowerCase().includes(word))) {
+      repeat = true;
+      repeatInterval = element.interval;
+    }
+  });
+  return { repeat: repeat, repeatInterval: repeatInterval };
 }
