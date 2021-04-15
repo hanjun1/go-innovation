@@ -1,0 +1,31 @@
+body{
+    background-color: #6A93A0;
+    font-size: 16px;
+}
+.container-xxl div{
+    border: 1px solid rgba(0, 0, 0, 0.137)
+}
+.main-navbar{
+    border: 1px dotted blue !important;
+}
+.main-jumbotron{
+    border: 1px dotted red !important;
+}
+.main-feed{
+    border: 1px dotted green !important;
+}
+.main-social{
+    border: 1px dotted yellow !important;
+    background-color: white;
+}
+
+.menu-item{
+    margin-bottom: 1em;
+    height: 7em;
+    background-color: white;
+}
+
+.container-xxl{
+    margin: 1em 5em;
+}
+

@@ -19,8 +19,10 @@ function isLoggedIn(req, res, next){
 
 async function getCategoryData(req, res) {
     const category = req.params.category
-    const user = await Users.findOne({ where: {'id': req.user.id} })
-    const data = await Reminders.findAll()
+    const user = await Users.findOne({ where: {'id': 2} })
+    const data = await Reminders.findAll({ where: {
+        userId: 2,
+    }})
     res.json({
         category: category,
         data: data
@@ -30,16 +32,29 @@ async function getCategoryData(req, res) {
 function createReminderData(req, res) {
     const categories = ["Medications", "Bills", "Reminders", "Tasks"]
     for (let i = 0; i < req.params.num; i++) {
+        const date = new Date()
+        console.log(date)
+        const startDate = date.setDate(date.getDate() + randomIntFromInterval(1,7));
+        const endDate = startTime + 3600*2;
+        console.log(startTime, endTime)
+
+        const settings = {
+            start: new Date(startTime).toISOString().slice(0, 19).replace('T', ' '),
+            end: new Date(endTime).toISOString().slice(0, 19).replace('T', ' ')
+        }
+        
         Reminders.create({
-            settings: "{ settings }",
-            userId: req.user.id,
-            authorId: req.user.id,
+            startDate: new Date(startTime).toISOString().slice(0, 19).replace('T', ' '),
+            endDate: new Date(endTime).toISOString().slice(0, 19).replace('T', ' '),
+            threadId: 1,
+            settings: "{}",
+            userId: 2,
+            authorId: 2,
             title: "fake reminder",
             description: "this is a fake reminder",
             category: categories[randomIntFromInterval(0, categories.length-1)]
         })
     }
-
     res.send(req.params.num + " Fake Reminders Created")
 }
 

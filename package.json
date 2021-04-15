@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@assistant/conversation": "^3.4.0",
     "@google-cloud/automl": "^2.4.1",
     "body-parser": "^1.18.3",
     "connect-session-sequelize": "^7.1.1",
