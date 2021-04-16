@@ -141,11 +141,14 @@ async function changeCheckbox(req, res) {
     const category = req.params.category
     const user = await Users.findOne({ where: {'id': 2} })
     const reminder = await Reminders.findOne({ where: {
-        id: req.body.reminderId
+        id: req.body.reminderId,
+        userId: user.id
     }})
     reminder.checked = req.body.checked
     await reminder.save()
-    res.status(200).send("value changed")
+    res.status(200).send({
+        value: reminder.checked,
+    })
 }
 
 
