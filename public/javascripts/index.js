@@ -12,29 +12,34 @@ closeBtns.forEach((btn) => {
 });
 
 function openWindow(e) {
-  let menu = e.target.innerHTML;
+  let menu =
+    e.target.id !== ""
+      ? e.target.id
+      : e.target.parentElement.id !== ""
+      ? e.target.parentElement.id
+      : e.target.parentElement.parentElement.id;
   switch (menu) {
-    case "Settings":
+    case "settings-button":
       refreshWindow("main-settings-container");
     //   generateData("Settings")
       break;
-    case "Add Item":
+    case "add-item-button":
       refreshWindow("main-add-items-container");
     //   generateData("Add Item")
       break;
-    case "Medications":
+    case "medications-button":
       refreshWindow("main-medications-container");
       generateData("Medications")
       break;
-    case "Bills":
+    case "bills-button":
       refreshWindow("main-bills-container");
       generateData("Bills")
       break;
-    case "Appointments":
+    case "appointments-button":
       refreshWindow("main-appointments-container");
       generateData("Appointments")
       break;
-    case "Reminders":
+    case "reminders-button":
       refreshWindow("main-reminders-container");
       generateData("Reminders")
       break;

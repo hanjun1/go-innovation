@@ -1,47 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+svg {
+  width: 4vw;
+}
+
 .hidden {
   display: none;
 }
 
 .main-container {
   max-width: 1000px;
+  height: 95vh;
   display: flex;
-  margin-left: auto;
-  margin-right: auto;
+  justify-content: center;
+  margin: 2vh auto;
+}
+
+.main-all-container,
+.main-reminders-container,
+.main-appointments-container,
+.main-add-items-container,
+.main-bills-container,
+.main-medications-container,
+.main-settings-container {
+  height: 78.2vh;
 }
 
 .main-sub-container {
   border: 1px solid #000;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 2.5rem;
 }
 
 .notifications-container {
   border: 1px solid #000;
+  margin-left: 2.5rem;
+  width: 38%;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 }
 
 .close-btn {
   text-align: right;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-family: "Varela Round", sans-serif;
+  cursor: pointer;
 }
 
-.welcome-message-container {
-  height: 100px;
+.welcome-container {
   border: 1px solid #000;
-}
-
-.button-container {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #000;
+  height: 12vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.welcome-image-container {
+  padding: 1rem;
+}
+
+.welcome-message-container {
+  padding: 1rem;
+}
+
+.welcome-message-container .title {
+  font-size: 1.8rem;
+}
+
+.button-container {
+  max-width: 136px;
+  width: 12vw;
+  min-width: 100px;
+  height: 12vh;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-container svg {
+  width: 50px;
+  margin-bottom: 0.5rem;
+}
+
+#logo {
+  width: 8vw;
+  height: 8vh;
+}
+
+.des-header {
+  font-weight: bold;
+}
+
+.notification-container {
+  margin: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .notification-header-container {
   display: flex;
+  margin-bottom: 1rem;
+}
+
+.notification-button-container button {
+  height: 30px;
+  width: 100%;
+}
+
+.middle-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .image-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #000;
+  width: 100%;
+}
+
+.image-container svg {
+  width: 70%;
+}
+
+.main-item-container-padding {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+.main-item-container {
+  display: flex;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.main-item-container .date-header {
+  font-size: 1.75rem;
+}
+
+.item-time {
+  width: 15%;
+  margin-right: 0.5rem;
+}
+
+.item-time p {
+  text-align: right;
+}
+
+.item-time .time,
+.item-description .title {
+  font-size: 1.5rem;
+}
+
+.item-icon {
+  margin-right: 0.5rem;
+}
+
+.item-icon svg {
+  width: 60%;
+  height: 60%;
+}
+
+.item-description {
+  width: 65%;
+  margin-right: 0.5rem;
+}
+
+.item-icon,
+.item-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+}
+
+@media only screen and (max-width: 992px) {
+  .notifications-container {
+    display: none;
+  }
 }
