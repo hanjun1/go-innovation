@@ -116,7 +116,8 @@
         let time = document.getElementById("time-input")
         let recordButton = document.getElementById("record-button")
         let action = document.getElementById("action-input")
-        let recurrence = document.getElementById("recurrence-input")
+        let recurrenceFalse = document.getElementById("recurrence-input-false")
+        let recurrenceTrue = document.getElementById("recurrence-input-true")
         let recurrenceInterval = document.getElementById("recurrence-interval-input")
 
         //---------------state Variables------------//    
@@ -156,7 +157,7 @@
         async function getCategory(e) {
             let body = { "input": input.value }
             //send input to controller function fillForm
-            const response = await fetch("/fillForm", {
+            const response = await fetch("/api/fillForm", {
                 method: 'POST',
                 cache: 'no-cache',
                 credentials: 'same-origin',
@@ -185,11 +186,13 @@
 
             // set recurrence and interval
             if (response.repeat) {
-                recurrence.checked = true;
+                recurrenceTrue.checked = true;
+                recurrenceFalse.checked = false;
                 recurrenceInterval.value = response.repeatInterval;
             }
             else {
-                recurrence.checked = false;
+                recurrenceTrue.checked = false;
+                recurrenceFalse.checked = true;
                 recurrenceInterval.value = "";
             }
         }

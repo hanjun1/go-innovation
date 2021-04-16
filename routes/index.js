@@ -27,25 +27,6 @@ router.get('/failure', async function(req, res, next) {
 });
 
 
-router.get('/test-thread', async function(req, res, next) {
-    try{
-      await Threads.create({
-        user1: 1,
-        user2: 2
-    })
-    }catch(err){
-      console.log(err)
-    }
-  
-    
-    res.send("Hello, World");
-  });
-
-router.get("/bt", (req, res) => {
-    res.render("bt")
-})
-
-
 /* GET home page. */
 router.get("/", indexCtrl.index);
 router.post("/fillForm", indexCtrl.fillForm);

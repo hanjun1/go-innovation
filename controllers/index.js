@@ -1,6 +1,7 @@
 const db = require("../models");
 const Op = require("../models/index").Sequelize.Op
 const Reminders = db.Reminder;
+const Alerts = db.Alert
 
 module.exports = {
   index,
@@ -20,22 +21,10 @@ const MY_TOKEN = process.env.MY_TOKEN;
 const client1 = new Wit({ accessToken: MY_TOKEN });
 
 async function index(req, res) {
+    // Data
     const now = new Date()
-    // const beginDate = new Date(Date.now() - 3600*12*1000)
-    // const endDate = new Date(Date.now() + 3600*12*1000)
-    let beginDate, endDate;
-    if (now.getHours() < 4) {
-        beginDate = new Date(Date.now() - 3600*24*1000).setHours(4,0,0,0)
-        endDate = new Date(Date.now()).setHours(23,59,59,999)
-    } else if (now.getHours() < 4 ) {
-        beginDate = new Date(Date.now()).setHours(4,0,0,0)
-        endDate = new Date(Date.now() + 1).setHours(23,59,59,999)
-
-    } else {
-        beginDate = new Date(Date.now()).setHours(4,0,0,0)
-        endDate = new Date(Date.now() + 1).setHours(23,59,59,999)
-
-    }
+    const beginDate = new Date(Date.now()).setHours(0,0,0,0)
+    const endDate = new Date(Date.now()).setHours(23,59,59,999)
     const data = await Reminders.findAll({
         where: {
             userId: 2,
@@ -53,10 +42,20 @@ async function index(req, res) {
             break;
         }
     }
+
+    // Alerts
+    const alerts = await Alerts.findAll({
+        where: {
+            userId: 2,
+        },
+        order: [['updatedAt', 'ASC']],
+    })
+
     res.render("index", {
+        isTrustee: true,
         data: data,
         index: index,
-        
+        alerts: alerts,
     });
 }
 
