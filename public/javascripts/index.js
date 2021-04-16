@@ -80,12 +80,12 @@ checkboxes.forEach(item => {
         const target = e.target
         const id = target.getAttribute("name")
         const value = target.checked
-        changeCheckbox(id, value)
+        changeCheckboxFromCheckbox(id, value)
+        changeAlertFromCheckbox(id, value)
     })
 })
 
-function changeCheckbox(id, value) {
-    // const item_id = document.querySelector("#user_id").value;
+function changeCheckboxFromCheckbox(id, value) {
     const url = "/api/checkbox"
     if (value) {
         value = true;
@@ -106,4 +106,87 @@ function changeCheckbox(id, value) {
         }
     }
     http.send(json_upload);
+}
+
+const notificationContainers = document.querySelectorAll(".notification-container")
+function changeAlertFromCheckbox(id, value) {
+    for (let i = 0; i < notificationContainers.length; i++) {
+        const container = notificationContainers[i]
+        if (container.id == id && value == true) {
+            container.remove()
+            break;
+        }
+    }
+}
+
+
+// SEND ALERT TO USER
+const notifyButtons = document.querySelectorAll(".notify-button");
+
+notifyButtons.forEach(item => {
+    item.addEventListener("click", e => {
+        let target = e.target
+        const id = target.getAttribute("name")
+        target.innerHTML = "Sent"
+        target.classList.add("disabled")
+        sendAlert(id)
+    })
+})
+
+function sendAlert(id) {
+    const url = "/api/createAlert"
+    const json_upload = JSON.stringify({
+        "reminderId" : id,
+    });
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.onreadystatechange = (e) => {
+        if (http.readyState == 4 && http.status === 200) {
+            console.log(http.response)
+        }
+    }
+    http.send(json_upload);
+}
+
+
+// ALERT BUTTONS HANDLER
+const alertButtons = document.querySelectorAll(".alert-button-yes, .alert-button-dismiss");
+
+alertButtons.forEach(item => {
+    item.addEventListener("click",e => {
+        let target = e.target
+        const value = target.value
+        const id = target.getAttribute("name") 
+        updateAlert(id, value)
+    })
+})
+
+function updateAlert(id, value) {
+    const url = "/api/updateAlertStatus"
+    const json_upload = JSON.stringify({
+        "id" : id,
+        "value": value
+    });
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.setRequestHeader("Content-Type", "application/json");
+    http.onreadystatechange = (e) => {
+        if (http.readyState == 4 && http.status === 200) {
+            changeCheckboxFromAlerts(JSON.parse(http.response))
+        }
+    }
+    http.send(json_upload);
+}
+
+function changeCheckboxFromAlerts(response) {
+    if (response.reminder) {
+        for (let i = 0; i < checkboxes.length; i++) {
+            const checkbox = checkboxes[i]
+            if (parseInt(checkbox.name) == response.reminderId) {
+                checkbox.checked = true
+                break;
+            }
+        }
+    }
 }

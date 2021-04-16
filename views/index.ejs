@@ -62,12 +62,18 @@
                         </svg>
                       <% } %>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                       <%= data[i].title %>
                     </div>
-                    <div class="col-4">
-                      <%= data[i].category %>
-                    </div>
+                    <% if (isTrustee) { %>
+                      <div class="col-2">
+                        <button type="button" class="btn btn-primary notify-button" name=<%= data[i].id %>>Notify</button>
+                      </div>
+                    <% } else { %>
+                      <div class="col-2">
+                        <%= data[i].category %>
+                      </div>  
+                    <% } %>
                     <div class="col-1 text-end">
                       <div class="form-check">
                         <% if (data[i].checked) { %>

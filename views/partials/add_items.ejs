@@ -15,8 +15,21 @@
         <h5>Time:</h5>
         <input type="time" id="time-input" required>
         <h5>Recurrence?</h5>
-        <input type="checkbox" id="recurrence-input">
-        <h5>Recurrence Interval</h5>
+        <div class="d-flex">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="recurrence-input-false" value="false" checked>
+            <label class="form-check-label" for="recurrence-input-false">
+              No
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="recurrence-input-true" value="true">
+            <label class="form-check-label" for="recurrence-input-true">
+              Yes
+            </label>
+          </div>
+        </div>
+          <h5>Recurrence Interval</h5>
         <input type="text" id="recurrence-interval-input"><br>
         <button id="submit-form">Add Reminder</button>
     </div>
@@ -31,7 +44,8 @@
         let time = document.getElementById("time-input")
         let recordButton = document.getElementById("record-button")
         let action = document.getElementById("action-input")
-        let recurrence = document.getElementById("recurrence-input")
+        let recurrenceFalse= document.getElementById("recurrence-input-false")
+        let recurrenceTrue = document.getElementById("recurrence-input-true")
         let recurrenceInterval = document.getElementById("recurrence-interval-input")
 
         //---------------state Variables------------//    
@@ -71,7 +85,7 @@
         async function getCategory(e) {
             let body = { "input": input.value }
             //send input to controller function fillForm
-            const response = await fetch("/fillForm", {
+            const response = await fetch("/api/fillForm", {
                 method: 'POST',
                 cache: 'no-cache',
                 credentials: 'same-origin',
@@ -98,11 +112,13 @@
 
             // set recurrence and interval
             if (response.repeat) {
-                recurrence.checked = true;
+                recurrenceTrue.checked = true;
+                recurrenceFalse.checked = false;
                 recurrenceInterval.value = response.repeatInterval;
             }
             else {
-                recurrence.checked = false;
+                recurrenceTrue.checked = false;
+                recurrenceFalse.checked = true;
                 recurrenceInterval.value = "";
             }
         }

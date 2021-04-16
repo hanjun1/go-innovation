@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
         this.myAssociation = this.belongsTo(models.User, { foreignKey: "userId"})
-      // define association here
+        // this.myAssociation = this.hasOne(models.Threads, { foreignKey: ""})
     }
   };
   Reminder.init({
@@ -23,12 +23,19 @@ module.exports = (sequelize, DataTypes) => {
       category: DataTypes.STRING,
       startDate: DataTypes.DATE,
       endDate: DataTypes.DATE,
+      private: {
+          type: DataTypes.BOOLEAN,
+          default: false
+      },
       checked: {
           type: DataTypes.BOOLEAN,
           default: false
         },
-      ReminderChainId: DataTypes.INTEGER
-  }, {
+      ReminderChainId: {
+          type: DataTypes.INTEGER,
+          unique: true,
+      } 
+    }, {
     sequelize,
     modelName: 'Reminder',
   });

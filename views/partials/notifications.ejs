@@ -1,21 +1,23 @@
 <div class="notifications-container">
-    <div class="notification-container">
+  <% for (let i=0; i < alerts.length; i++) { %>
+    <div class="notification-container" id=<%= alerts[i].reminderId %>>
         <div class="notification-header-container">
             <div class="image-container">
                 IMG
             </div>
             <div class="desription-container">
-                <p>Sam wants to know:</p>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. </p>
+                <p><%= alerts[i].message %></p>
+                <p>Updated at: <%= alerts[i].updatedAt %></p>
+                <p>Created at: <%= alerts[i].createdAt %></p>
             </div>
         </div>
         <div class="notification-button-container">
-            <button>Yes</button>
-            <button>I'm about to.</button>
-            <button>No, I forgot</button>
+            <button class="alert-button-yes" value="true" name=<%= alerts[i].id %>>Yes</button>
+            <button class="alert-button-dismiss" value="false" name=<%= alerts[i].id %>>Dismiss</button>
         </div>
     </div>
-    <div class="notification-container">
+  <% } %>
+    <!-- <div class="notification-container">
         <div class="notification-header-container">
             <div class="image-container">
                 IMG
@@ -30,5 +32,5 @@
             <button>I'm about to.</button>
             <button>No, I forgot</button>
         </div>
-    </div>
+    </div> -->
 </div>
