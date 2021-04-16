@@ -1,0 +1,116 @@
+.main-add-items-container div.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 80px;
+  margin-right: 80px;
+  font-family: Helvetica, sans-serif;
+  overflow-y: scroll;
+}
+
+.main-add-items-container h1 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.main-add-items-container h5 {
+  margin-bottom: 5px;
+  color: rgb(95, 94, 94);
+}
+
+/************************ Record Button **************************/
+.main-add-items-container button.record-button {
+  background-color: #8fc5a8;
+  border: none;
+  height: 4em;
+  width: 8em;
+  border-radius: 6em;
+  box-shadow: 2px 2px 5px #c1c1c1;
+}
+
+.main-add-items-container button.record-button:active {
+  background: #77a88f;
+  -webkit-box-shadow: inset 1px 1px 5px #c1c1c1;
+  -moz-box-shadow: inset 1px 1px 5px #c1c1c1;
+  box-shadow: inset 1px 1px 5px #c1c1c1;
+  outline: none;
+}
+
+/************************ Input Area **************************/
+
+.main-add-items-container form {
+  width: 100%;
+}
+
+.main-add-items-container input,
+textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.main-add-items-container input[type="text"],
+input[type="date"],
+input[type="time"] {
+  height: 40px;
+  border: 2px solid rgb(189, 189, 189);
+  border-radius: 3px;
+}
+
+.main-add-items-container input.recording-output {
+  outline: none;
+  border: none;
+  width: 80%;
+  border-bottom: 2px solid grey;
+  height: 30px;
+}
+
+/************************ Category radios **************************/
+.main-add-items-container input[type="radio"] {
+  display: none;
+}
+.main-add-items-container fieldset {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.main-add-items-container fieldset > label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  align-items: center;
+  justify-content: space-between;
+  color: #6b778c;
+}
+
+.main-add-items-container fieldset > label:hover {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+.main-add-items-container [type="radio"]:checked ~ span {
+  font-weight: bold;
+  color: black;
+}
+
+/************************ Category radios **************************/
+.main-add-items-container div.datetime {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.main-add-items-container div.datetime > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/************************ recurrence checkbox **************************/
+.main-add-items-container input[type="checkbox"] {
+  width: 5%;
+}
