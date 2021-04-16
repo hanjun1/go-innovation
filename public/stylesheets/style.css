@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
 svg {
   width: 4vw;
 }
@@ -14,7 +16,13 @@ svg {
   margin: 2vh auto;
 }
 
-.main-all-container {
+.main-all-container,
+.main-reminders-container,
+.main-appointments-container,
+.main-add-items-container,
+.main-bills-container,
+.main-medications-container,
+.main-settings-container {
   height: 78.2vh;
 }
 
@@ -39,6 +47,10 @@ svg {
 
 .close-btn {
   text-align: right;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-family: "Varela Round", sans-serif;
+  cursor: pointer;
 }
 
 .welcome-container {
@@ -99,13 +111,9 @@ svg {
   margin-bottom: 1rem;
 }
 
-.notification-button-container {
-  display: flex;
-  justify-content: space-evenly;
-}
-
 .notification-button-container button {
   height: 30px;
+  width: 100%;
 }
 
 .middle-container {
@@ -135,6 +143,10 @@ svg {
   display: flex;
   padding-bottom: 1rem;
   border-bottom: 1px solid #eee;
+}
+
+.main-item-container .date-header {
+  font-size: 1.75rem;
 }
 
 .item-time {
