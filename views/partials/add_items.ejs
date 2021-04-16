@@ -1,21 +1,73 @@
 <div class="main-add-items-container hidden">
     <p class="close-btn"><span class="close">X</span></p>
     <div>
-        <textarea id="input"></textarea>
-        <button id="submit-button">submit</button>
+        <button id="record-button"><img
+                src="https://img.icons8.com/flat-round/64/000000/microphone--v1.png" /></button>Hold to talk <br><br>
+        <h5>Input</h5>
+        <textarea id="input" required></textarea>
+        <button id="submit-button">Sort</button>
+        <h5>Reminder:</h5>
+        <input type="text" id="action-input" required>
         <h5>Category:</h5>
-        <input type="text" id="category-input">
+        <input type="text" id="category-input" required>
+        <h5>Date:</h5>
+        <input type="date" id="date-input" required>
+        <h5>Time:</h5>
+        <input type="time" id="time-input" required>
+        <h5>Recurrence?</h5>
+        <input type="checkbox" id="recurrence-input">
+        <h5>Recurrence Interval</h5>
+        <input type="text" id="recurrence-interval-input"><br>
+        <button id="submit-form">Add Reminder</button>
     </div>
 
 
     <script>
+        //---------------Cached Variables------------//    
         let input = document.getElementById("input")
         let submitButton = document.getElementById("submit-button")
         let category = document.getElementById("category-input")
+        let date = document.getElementById("date-input")
+        let time = document.getElementById("time-input")
+        let recordButton = document.getElementById("record-button")
+        let action = document.getElementById("action-input")
+        let recurrence = document.getElementById("recurrence-input")
+        let recurrenceInterval = document.getElementById("recurrence-interval-input")
 
+        //---------------state Variables------------//    
+        let recordingOn = false;
+
+        //---------------Event Listeners below------------//
         submitButton.addEventListener("click", getCategory)
 
+        // Start Listening on button hold
+        recordButton.addEventListener("mousedown", function (e) {
+            if (recordingOn == false) {
+                recognition.start();
+                recordingOn = true;
+            }
+        })
 
+        // Stop listening on button release
+        recordButton.addEventListener("mouseup", function (e) {
+            if (recordingOn == true) {
+                recognition.stop();
+                recordingOn = false;
+            }
+        })
+
+        //---------------WebSpeech Recognition API------------//
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+
+        recognition.addEventListener("result", function (e) {
+            const text = e.results[0][0].transcript;
+            input.value = text;
+        });
+
+
+        //---------------AJAX call to Server------------//
         async function getCategory(e) {
             let body = { "input": input.value }
             //send input to controller function fillForm
@@ -29,13 +81,31 @@
                 redirect: 'follow',
                 referrerPolicy: 'no-referrer',
                 body: JSON.stringify(body)
-            }).then(res => res.text());
-            category.value = response;
-
+            }).then(res => res.json());
             console.log(response)
 
-        }
+            // set action input
+            action.value = response.action
+            // set category input
+            category.value = response.category;
 
+            // set date and time input
+            if (response.datetime !== "") {
+                datetime = new Date(response.datetime)
+                date.value = datetime.toISOString().slice(0, 10)
+                time.value = datetime.toISOString().slice(11, 16)
+            }
+
+            // set recurrence and interval
+            if (response.repeat) {
+                recurrence.checked = true;
+                recurrenceInterval.value = response.repeatInterval;
+            }
+            else {
+                recurrence.checked = false;
+                recurrenceInterval.value = "";
+            }
+        }
 
     </script>
 </div>

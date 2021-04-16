@@ -5,8 +5,12 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require('../config/config.js')[env];
+
 const db = {};
+Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
+  return this._applyTimezone(date, options).format('YYYY-MM-DD HH:mm:ss.SSS');
+};
 
 let sequelize;
 if (config.use_env_variable) {
@@ -24,7 +28,7 @@ fs
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
-
+  
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

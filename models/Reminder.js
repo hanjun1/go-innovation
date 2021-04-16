@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, DataTypes
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Reminder extends Model {
@@ -15,12 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Reminder.init({
-    settings: DataTypes.STRING,
-    userId: DataTypes.INTEGER,
-    authorId: DataTypes.INTEGER,
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    category: DataTypes.STRING
+      settings: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
+      authorId: DataTypes.INTEGER,
+      title: DataTypes.STRING,
+      description: DataTypes.STRING,
+      category: DataTypes.STRING,
+      startDate: DataTypes.DATE,
+      endDate: DataTypes.DATE,
+      checked: {
+          type: DataTypes.BOOLEAN,
+          default: false
+        },
+      ReminderChainId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Reminder',
